@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package ZScanProto;
+option go_package = "./api/grpc/zproto/";
+
+message Empty {}
+
+message Status {
+  bool success = 1;
+  string message = 2;
+}
+
+
+message LEDRequest {
+  uint32 red = 1;
+  uint32 green = 2;
+  uint32 blue = 3;
+}
+
+message LEDState {
+  uint32 red = 1;
+  uint32 green = 2;
+  uint32 blue = 3;
+}
+
+
+service ZPiController {
+   rpc SetLED (LEDRequest) returns (Status);
+   rpc GetLED (Empty) returns (LEDState);
+}

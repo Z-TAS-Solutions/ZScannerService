@@ -7,19 +7,15 @@ import (
 	"google.golang.org/grpc"
 )
 
-func RunLocalGRPC() {
-
+func main() {
 	grpcServer := grpc.NewServer()
 
-	localServer, error := net.Listen("tcp", ":50051")
+	zpi_listener, error := net.Listen("tcp", ":50051")
 	if error != nil {
 		log.Fatalf("failed to listen: %v", error)
 	}
 
-	grpcServer.Serve(localServer)
+	log.Print("ZPi GRPC Running !")
+	grpcServer.Serve(zpi_listener)
 
-}
-
-func main() {
-	RunLocalGRPC()
 }

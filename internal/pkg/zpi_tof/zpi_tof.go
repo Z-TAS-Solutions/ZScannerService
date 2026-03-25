@@ -19,7 +19,7 @@ func NewZToF() (*ZToF, error) {
 		return nil, err
 	}
 
-	i2c_bus, err := i2c.NewI2C(0x29, 0)
+	i2c_bus, err := i2c.NewI2C(0x29, 1)
 	if err != nil {
 		log.Fatal(err)
 	}

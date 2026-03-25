@@ -5,7 +5,7 @@ import (
 	"net"
 
 	zpi_controller "github.com/Z-TAS-Solutions/ZScannerService/internal/app/service"
-	zpi_indicator "github.com/Z-TAS-Solutions/ZScannerService/internal/pkg"
+	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zpi_indicator"
 	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zscanproto"
 	"google.golang.org/grpc"
 )

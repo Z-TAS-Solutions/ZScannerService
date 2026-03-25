@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	zpi_indicator "github.com/Z-TAS-Solutions/ZScannerService/internal/pkg"
+	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zpi_indicator"
 	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zscanproto"
 )
 

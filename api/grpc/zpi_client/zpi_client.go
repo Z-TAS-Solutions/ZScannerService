@@ -1,3 +1,4 @@
+package zpi_client
 
 import (
 	"log"

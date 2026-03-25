@@ -1,6 +1,6 @@
 package main
 
-import zpi_server "github.com/Z-TAS-Solutions/ZScannerService/api/grpc"
+import "github.com/Z-TAS-Solutions/ZScannerService/api/grpc/zpi_server"
 
 func main() {
 	zpi_server.RunZPiServer()

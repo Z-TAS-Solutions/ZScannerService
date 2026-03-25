@@ -13,16 +13,13 @@ type ZLED struct {
 	lastRed, lastGreen, lastBlue uint32
 }
 
-func NewLED(redPin, greenPin, bluePin int) *ZLED {
+func NewLED(red, green, blue int) *ZLED {
 	host.Init()
-	pin14 := gpioreg.ByName("GPIO14")
-	pin15 := gpioreg.ByName("GPIO15")
-	pin18 := gpioreg.ByName("GPIO18")
 
 	return &ZLED{
-		redPin:   pin14,
-		greenPin: pin15,
-		bluePin:  pin18,
+		redPin:   gpioreg.ByName(fmt.Sprintf("GPIO%d", red)),
+		greenPin: gpioreg.ByName(fmt.Sprintf("GPIO%d", green)),
+		bluePin:  gpioreg.ByName(fmt.Sprintf("GPIO%d", blue)),
 	}
 }
 

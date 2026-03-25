@@ -4,7 +4,7 @@
 // - protoc             v7.34.1
 // source: ZScanProto.proto
 
-package zproto
+package zscanproto
 
 import (
 	context "context"
@@ -19,15 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ZPiController_SetLED_FullMethodName = "/ZScanProto.ZPiController/SetLED"
-	ZPiController_GetLED_FullMethodName = "/ZScanProto.ZPiController/GetLED"
+	ZPiController_SetLEDStatus_FullMethodName = "/zscanproto.ZPiController/SetLEDStatus"
+	ZPiController_GetLED_FullMethodName       = "/zscanproto.ZPiController/GetLED"
 )
 
 // ZPiControllerClient is the client API for ZPiController service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ZPiControllerClient interface {
-	SetLED(ctx context.Context, in *LEDRequest, opts ...grpc.CallOption) (*Status, error)
+	SetLEDStatus(ctx context.Context, in *LEDStatusRequest, opts ...grpc.CallOption) (*Status, error)
 	GetLED(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*LEDState, error)
 }
 
@@ -39,10 +39,10 @@ func NewZPiControllerClient(cc grpc.ClientConnInterface) ZPiControllerClient {
 	return &zPiControllerClient{cc}
 }
 
-func (c *zPiControllerClient) SetLED(ctx context.Context, in *LEDRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *zPiControllerClient) SetLEDStatus(ctx context.Context, in *LEDStatusRequest, opts ...grpc.CallOption) (*Status, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Status)
-	err := c.cc.Invoke(ctx, ZPiController_SetLED_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ZPiController_SetLEDStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (c *zPiControllerClient) GetLED(ctx context.Context, in *Empty, opts ...grp
 // All implementations must embed UnimplementedZPiControllerServer
 // for forward compatibility.
 type ZPiControllerServer interface {
-	SetLED(context.Context, *LEDRequest) (*Status, error)
+	SetLEDStatus(context.Context, *LEDStatusRequest) (*Status, error)
 	GetLED(context.Context, *Empty) (*LEDState, error)
 	mustEmbedUnimplementedZPiControllerServer()
 }
@@ -75,8 +75,8 @@ type ZPiControllerServer interface {
 // pointer dereference when methods are called.
 type UnimplementedZPiControllerServer struct{}
 
-func (UnimplementedZPiControllerServer) SetLED(context.Context, *LEDRequest) (*Status, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetLED not implemented")
+func (UnimplementedZPiControllerServer) SetLEDStatus(context.Context, *LEDStatusRequest) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetLEDStatus not implemented")
 }
 func (UnimplementedZPiControllerServer) GetLED(context.Context, *Empty) (*LEDState, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetLED not implemented")
@@ -102,20 +102,20 @@ func RegisterZPiControllerServer(s grpc.ServiceRegistrar, srv ZPiControllerServe
 	s.RegisterService(&ZPiController_ServiceDesc, srv)
 }
 
-func _ZPiController_SetLED_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LEDRequest)
+func _ZPiController_SetLEDStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LEDStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ZPiControllerServer).SetLED(ctx, in)
+		return srv.(ZPiControllerServer).SetLEDStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ZPiController_SetLED_FullMethodName,
+		FullMethod: ZPiController_SetLEDStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ZPiControllerServer).SetLED(ctx, req.(*LEDRequest))
+		return srv.(ZPiControllerServer).SetLEDStatus(ctx, req.(*LEDStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -142,12 +142,12 @@ func _ZPiController_GetLED_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ZPiController_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ZScanProto.ZPiController",
+	ServiceName: "zscanproto.ZPiController",
 	HandlerType: (*ZPiControllerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SetLED",
-			Handler:    _ZPiController_SetLED_Handler,
+			MethodName: "SetLEDStatus",
+			Handler:    _ZPiController_SetLEDStatus_Handler,
 		},
 		{
 			MethodName: "GetLED",

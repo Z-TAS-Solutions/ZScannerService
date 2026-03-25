@@ -4,7 +4,7 @@
 // 	protoc        v7.34.1
 // source: ZScanProto.proto
 
-package zproto
+package zscanproto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -20,6 +20,58 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+type LEDStatus int32
+
+const (
+	LEDStatus_VOID    LEDStatus = 0
+	LEDStatus_SUCCESS LEDStatus = 1
+	LEDStatus_PENDING LEDStatus = 2
+	LEDStatus_FAILED  LEDStatus = 3
+)
+
+// Enum value maps for LEDStatus.
+var (
+	LEDStatus_name = map[int32]string{
+		0: "VOID",
+		1: "SUCCESS",
+		2: "PENDING",
+		3: "FAILED",
+	}
+	LEDStatus_value = map[string]int32{
+		"VOID":    0,
+		"SUCCESS": 1,
+		"PENDING": 2,
+		"FAILED":  3,
+	}
+)
+
+func (x LEDStatus) Enum() *LEDStatus {
+	p := new(LEDStatus)
+	*p = x
+	return p
+}
+
+func (x LEDStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LEDStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_ZScanProto_proto_enumTypes[0].Descriptor()
+}
+
+func (LEDStatus) Type() protoreflect.EnumType {
+	return &file_ZScanProto_proto_enumTypes[0]
+}
+
+func (x LEDStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LEDStatus.Descriptor instead.
+func (LEDStatus) EnumDescriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{0}
+}
 
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -109,29 +161,27 @@ func (x *Status) GetMessage() string {
 	return ""
 }
 
-type LEDRequest struct {
+type LEDStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Red           uint32                 `protobuf:"varint,1,opt,name=red,proto3" json:"red,omitempty"`
-	Green         uint32                 `protobuf:"varint,2,opt,name=green,proto3" json:"green,omitempty"`
-	Blue          uint32                 `protobuf:"varint,3,opt,name=blue,proto3" json:"blue,omitempty"`
+	Status        LEDStatus              `protobuf:"varint,1,opt,name=status,proto3,enum=zscanproto.LEDStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *LEDRequest) Reset() {
-	*x = LEDRequest{}
+func (x *LEDStatusRequest) Reset() {
+	*x = LEDStatusRequest{}
 	mi := &file_ZScanProto_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LEDRequest) String() string {
+func (x *LEDStatusRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LEDRequest) ProtoMessage() {}
+func (*LEDStatusRequest) ProtoMessage() {}
 
-func (x *LEDRequest) ProtoReflect() protoreflect.Message {
+func (x *LEDStatusRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_ZScanProto_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -143,30 +193,16 @@ func (x *LEDRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use LEDRequest.ProtoReflect.Descriptor instead.
-func (*LEDRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use LEDStatusRequest.ProtoReflect.Descriptor instead.
+func (*LEDStatusRequest) Descriptor() ([]byte, []int) {
 	return file_ZScanProto_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *LEDRequest) GetRed() uint32 {
+func (x *LEDStatusRequest) GetStatus() LEDStatus {
 	if x != nil {
-		return x.Red
+		return x.Status
 	}
-	return 0
-}
-
-func (x *LEDRequest) GetGreen() uint32 {
-	if x != nil {
-		return x.Green
-	}
-	return 0
-}
-
-func (x *LEDRequest) GetBlue() uint32 {
-	if x != nil {
-		return x.Blue
-	}
-	return 0
+	return LEDStatus_VOID
 }
 
 type LEDState struct {
@@ -234,23 +270,26 @@ var File_ZScanProto_proto protoreflect.FileDescriptor
 const file_ZScanProto_proto_rawDesc = "" +
 	"\n" +
 	"\x10ZScanProto.proto\x12\n" +
-	"ZScanProto\"\a\n" +
+	"zscanproto\"\a\n" +
 	"\x05Empty\"<\n" +
 	"\x06Status\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"H\n" +
-	"\n" +
-	"LEDRequest\x12\x10\n" +
-	"\x03red\x18\x01 \x01(\rR\x03red\x12\x14\n" +
-	"\x05green\x18\x02 \x01(\rR\x05green\x12\x12\n" +
-	"\x04blue\x18\x03 \x01(\rR\x04blue\"F\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"A\n" +
+	"\x10LEDStatusRequest\x12-\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x15.zscanproto.LEDStatusR\x06status\"F\n" +
 	"\bLEDState\x12\x10\n" +
 	"\x03red\x18\x01 \x01(\rR\x03red\x12\x14\n" +
 	"\x05green\x18\x02 \x01(\rR\x05green\x12\x12\n" +
-	"\x04blue\x18\x03 \x01(\rR\x04blue2x\n" +
-	"\rZPiController\x124\n" +
-	"\x06SetLED\x12\x16.ZScanProto.LEDRequest\x1a\x12.ZScanProto.Status\x121\n" +
-	"\x06GetLED\x12\x11.ZScanProto.Empty\x1a\x14.ZScanProto.LEDStateB\x14Z\x12./api/grpc/zproto/b\x06proto3"
+	"\x04blue\x18\x03 \x01(\rR\x04blue*;\n" +
+	"\tLEDStatus\x12\b\n" +
+	"\x04VOID\x10\x00\x12\v\n" +
+	"\aSUCCESS\x10\x01\x12\v\n" +
+	"\aPENDING\x10\x02\x12\n" +
+	"\n" +
+	"\x06FAILED\x10\x032\x84\x01\n" +
+	"\rZPiController\x12@\n" +
+	"\fSetLEDStatus\x12\x1c.zscanproto.LEDStatusRequest\x1a\x12.zscanproto.Status\x121\n" +
+	"\x06GetLED\x12\x11.zscanproto.Empty\x1a\x14.zscanproto.LEDStateB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
 
 var (
 	file_ZScanProto_proto_rawDescOnce sync.Once
@@ -264,23 +303,26 @@ func file_ZScanProto_proto_rawDescGZIP() []byte {
 	return file_ZScanProto_proto_rawDescData
 }
 
+var file_ZScanProto_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_ZScanProto_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_ZScanProto_proto_goTypes = []any{
-	(*Empty)(nil),      // 0: ZScanProto.Empty
-	(*Status)(nil),     // 1: ZScanProto.Status
-	(*LEDRequest)(nil), // 2: ZScanProto.LEDRequest
-	(*LEDState)(nil),   // 3: ZScanProto.LEDState
+	(LEDStatus)(0),           // 0: zscanproto.LEDStatus
+	(*Empty)(nil),            // 1: zscanproto.Empty
+	(*Status)(nil),           // 2: zscanproto.Status
+	(*LEDStatusRequest)(nil), // 3: zscanproto.LEDStatusRequest
+	(*LEDState)(nil),         // 4: zscanproto.LEDState
 }
 var file_ZScanProto_proto_depIdxs = []int32{
-	2, // 0: ZScanProto.ZPiController.SetLED:input_type -> ZScanProto.LEDRequest
-	0, // 1: ZScanProto.ZPiController.GetLED:input_type -> ZScanProto.Empty
-	1, // 2: ZScanProto.ZPiController.SetLED:output_type -> ZScanProto.Status
-	3, // 3: ZScanProto.ZPiController.GetLED:output_type -> ZScanProto.LEDState
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: zscanproto.LEDStatusRequest.status:type_name -> zscanproto.LEDStatus
+	3, // 1: zscanproto.ZPiController.SetLEDStatus:input_type -> zscanproto.LEDStatusRequest
+	1, // 2: zscanproto.ZPiController.GetLED:input_type -> zscanproto.Empty
+	2, // 3: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
+	4, // 4: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_ZScanProto_proto_init() }
@@ -293,13 +335,14 @@ func file_ZScanProto_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ZScanProto_proto_rawDesc), len(file_ZScanProto_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_ZScanProto_proto_goTypes,
 		DependencyIndexes: file_ZScanProto_proto_depIdxs,
+		EnumInfos:         file_ZScanProto_proto_enumTypes,
 		MessageInfos:      file_ZScanProto_proto_msgTypes,
 	}.Build()
 	File_ZScanProto_proto = out.File

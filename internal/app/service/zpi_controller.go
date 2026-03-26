@@ -25,6 +25,8 @@ type ControllerServer struct {
 	camProcess *zpi_camera.CameraProcess
 	camStatus  zscanproto.CamState
 	camConfig  *zscanproto.CameraConfig
+	camMutex   sync.camMutextex
+
 	peerClient zscanproto.ZPiControllerClient
 }
 
@@ -190,4 +192,84 @@ func (s *ControllerServer) StartToFMonitor(ctx context.Context) {
 		}
 	}
 
+}
+
+func (c *ControllerServer) ActivateCamera(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	c.camMutex.Lock()
+	defer c.camMutex.Unlock()
+
+	if c.camStatus == zscanproto.CamState_CAMACTIVE {
+		return &zscanproto.Status{
+			Success: true,
+			Message: "Camera already active",
+		}, nil
+	}
+
+	if err := c.camProcess.Start(720, 720, 114, "tcp://0.0.0.0:8888"); err != nil {
+		c.camStatus = zscanproto.CamState_CAMINACTIVE
+		return &zscanproto.Status{
+			Success: false,
+			Message: fmt.Sprintf("Failed to start camera: %v", err),
+		}, nil
+	}
+
+	c.camStatus = zscanproto.CamState_CAMACTIVE
+	return &zscanproto.Status{
+		Success: true,
+		Message: "Camera activated",
+	}, nil
+}
+
+func (c *ControllerServer) DeactivateCamera(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	c.camMutex.Lock()
+	defer c.camMutex.Unlock()
+
+	if c.camStatus != zscanproto.CamState_CAMACTIVE {
+		return &zscanproto.Status{
+			Success: true,
+			Message: "Camera not active",
+		}, nil
+	}
+
+	if err := c.camProcess.Stop(); err != nil {
+		return &zscanproto.Status{
+			Success: false,
+			Message: fmt.Sprintf("Failed to stop camera: %v", err),
+		}, nil
+	}
+
+	c.camStatus = zscanproto.CamState_CAMINACTIVE
+	return &zscanproto.Status{
+		Success: true,
+		Message: "Camera deactivated",
+	}, nil
+}
+
+func (c *ControllerServer) ConfigureCamera(ctx context.Context, cfg *zscanproto.CameraConfig) (*zscanproto.Status, error) {
+	c.camMutex.Lock()
+	defer c.camMutex.Unlock()
+
+	if c.camStatus == zscanproto.CamState_CAMACTIVE {
+		if err := c.camProcess.Stop(); err != nil {
+			return &zscanproto.Status{
+				Success: false,
+				Message: fmt.Sprintf("Failed to stop camera for reconfig: %v", err),
+			}, nil
+		}
+		c.camStatus = zscanproto.CamState_CAMINACTIVE
+	}
+
+	if err := c.camProcess.Start(cfg.Width, cfg.Height, cfg.Fps, "tcp://0.0.0.0:8888"); err != nil {
+		c.camStatus = zscanproto.CamState_CAMINACTIVE
+		return &zscanproto.Status{
+			Success: false,
+			Message: fmt.Sprintf("Failed to configure camera: %v", err),
+		}, nil
+	}
+
+	c.camStatus = zscanproto.CamState_CAMACTIVE
+	return &zscanproto.Status{
+		Success: true,
+		Message: fmt.Sprintf("Camera configured: %dx%d @ %dfps", cfg.Width, cfg.Height, cfg.Fps),
+	}, nil
 }

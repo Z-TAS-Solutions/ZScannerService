@@ -64,6 +64,7 @@ func (s *ControllerServer) GetLED(ctx context.Context, _ *zscanproto.Empty) (*zs
 
 func (s *ControllerServer) ToFEventStream(stream zscanproto.ZPiController_ToFEventStreamServer) error {
 	ctx := stream.Context()
+	fmt.Println("Client Registered to ToF Event Stream")
 	s.tofEventStream = stream
 	s.StartToFMonitor(ctx, stream)
 	return nil
@@ -171,6 +172,9 @@ func (s *ControllerServer) StartToFMonitor(ctx context.Context, stream zscanprot
 
 			if !s.eventStatus && distance < s.triggerThreshold {
 				s.eventStatus = true
+				s.SetLEDStatus(ctx, &zscanproto.LEDStatusRequest{
+					Status: zscanproto.LEDStatus_FAILED,
+				})
 
 				trigger := &zscanproto.ToFEvent{
 					Type: zscanproto.ToFEvent_TRIGGER,

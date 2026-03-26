@@ -10,6 +10,7 @@ message Status {
   string message = 2;
 }
 
+
 enum LEDStatus {
   VOID = 0;
   SUCCESS = 1;
@@ -37,6 +38,16 @@ enum ToFState {
 
 message ToFConfig {
   uint32 threshold = 1;
+}
+
+message ToFEvent {
+    enum Type {
+        TRIGGER = 0;
+        PENDING = 1;
+        RESULT = 2;
+    }
+    Type type = 1;
+    LEDStatus ledStatus = 3;
 }
 
 
@@ -72,4 +83,6 @@ service ZPiController {
    rpc ActivateCamera (Empty) returns (Status);
    rpc DeactivateCamera (Empty) returns (Status);
    rpc ConfigureCamera (CameraConfig) returns (Status);
+
+   rpc ToFEventStream(stream ToFEvent) returns (stream ToFEvent);
 }

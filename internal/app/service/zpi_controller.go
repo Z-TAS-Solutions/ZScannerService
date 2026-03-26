@@ -28,7 +28,8 @@ type ControllerServer struct {
 	camConfig  *zscanproto.CameraConfig
 	camMutex   sync.Mutex
 
-	peerClient zscanproto.ZPiControllerClient
+	eventStatus    bool
+	tofEventStream zscanproto.ZPiController_ToFEventStreamServer
 }
 
 func NewControllerServer(indicator *zpi_indicator.ZLED, trigger *zpi_trigger.ZToF) *ControllerServer {
@@ -61,8 +62,11 @@ func (s *ControllerServer) GetLED(ctx context.Context, _ *zscanproto.Empty) (*zs
 	return &zscanproto.LEDState{Red: r, Green: g, Blue: b}, nil
 }
 
-func (s *ControllerServer) SetPeerClient(client zscanproto.ZPiControllerClient) {
-	s.peerClient = client
+func (s *ControllerServer) ToFEventStream(stream zscanproto.ZPiController_ToFEventStreamServer) error {
+	ctx := stream.Context()
+	s.tofEventStream = stream
+	s.StartToFMonitor(ctx, stream)
+	return nil
 }
 
 func (s *ControllerServer) ConfigureToF(ctx context.Context, req *zscanproto.ToFConfig) (*zscanproto.Status, error) {
@@ -81,7 +85,7 @@ func (s *ControllerServer) ConfigureToF(ctx context.Context, req *zscanproto.ToF
 		loopCtx, cancel := context.WithCancel(context.Background())
 		s.triggerDeactivation = cancel
 		s.triggerStatus = zscanproto.ToFState_ToFActive
-		go s.StartToFMonitor(loopCtx)
+		go s.StartToFMonitor(loopCtx, s.tofEventStream)
 	}
 
 	return &zscanproto.Status{
@@ -133,7 +137,7 @@ func (s *ControllerServer) ActivateToF(ctx context.Context, _ *zscanproto.Empty)
 
 	s.triggerStatus = zscanproto.ToFState_ToFActive
 
-	go s.StartToFMonitor(loopCtx)
+	go s.StartToFMonitor(loopCtx, s.tofEventStream)
 
 	return &zscanproto.Status{Success: true, Message: "ToF activated"}, nil
 }
@@ -150,7 +154,9 @@ func (s *ControllerServer) DeactivateToF(ctx context.Context, _ *zscanproto.Empt
 	return &zscanproto.Status{Success: true, Message: "ToF deactivated"}, nil
 }
 
-func (s *ControllerServer) StartToFMonitor(ctx context.Context) {
+func (s *ControllerServer) StartToFMonitor(ctx context.Context, stream zscanproto.ZPiController_ToFEventStreamServer) {
+	const clientTimeout = 10 * time.Second
+
 	for {
 		select {
 		case <-ctx.Done():
@@ -159,40 +165,63 @@ func (s *ControllerServer) StartToFMonitor(ctx context.Context) {
 		default:
 			distance, err := s.trigger.Read()
 			if err != nil {
-				log.Println("ToF read error:", err)
 				time.Sleep(100 * time.Millisecond)
 				continue
 			}
 
-			var newState zscanproto.LEDStatus
-			if distance < s.triggerThreshold {
-				newState = zscanproto.LEDStatus_FAILED
-			} else {
-				newState = zscanproto.LEDStatus_VOID
-			}
+			if !s.eventStatus && distance < s.triggerThreshold {
+				s.eventStatus = true
 
-			if newState != s.indicatorStatus {
-				_, _ = s.SetLEDStatus(context.Background(), &zscanproto.LEDStatusRequest{
-					Status: newState,
-				})
-				s.indicatorStatus = newState
-
-				if s.peerClient != nil {
-					ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-					_, err := s.peerClient.SetLEDStatus(ctx, &zscanproto.LEDStatusRequest{
-						Status: newState,
-					})
-					cancel()
-					if err != nil {
-						log.Println("Failed to notify peer:", err)
-					}
+				trigger := &zscanproto.ToFEvent{
+					Type: zscanproto.ToFEvent_TRIGGER,
 				}
+				if err := stream.Send(trigger); err != nil {
+					log.Println("Failed to send ToF trigger:", err)
+					s.eventStatus = false
+					continue
+				}
+				log.Println("ToF trigger sent, waiting for client response...")
+
+				completion := make(chan struct{})
+				go func() {
+					defer close(completion)
+					for {
+						clientEvent, err := stream.Recv()
+						if err != nil {
+							log.Println("Client disconnected or error:", err)
+							return
+						}
+
+						switch clientEvent.Type {
+						case zscanproto.ToFEvent_PENDING:
+							_, _ = s.SetLEDStatus(ctx, &zscanproto.LEDStatusRequest{
+								Status: zscanproto.LEDStatus_PENDING,
+							})
+							log.Println("Pending Auth")
+
+						case zscanproto.ToFEvent_RESULT:
+							_, _ = s.SetLEDStatus(ctx, &zscanproto.LEDStatusRequest{
+								Status: clientEvent.LedStatus,
+							})
+							log.Println("Auth Result Received")
+							return
+						}
+					}
+				}()
+
+				select {
+				case <-completion:
+					log.Println("Client session completed")
+				case <-time.After(clientTimeout):
+					log.Println("Client did not respond within timeout, resetting session")
+				}
+
+				s.eventStatus = false
 			}
 
 			time.Sleep(50 * time.Millisecond)
 		}
 	}
-
 }
 
 func (c *ControllerServer) ActivateCamera(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {

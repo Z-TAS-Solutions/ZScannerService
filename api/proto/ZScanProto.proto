@@ -69,8 +69,6 @@ service ZPiController {
    rpc ActivateToF (Empty) returns (Status); 
    rpc DeactivateToF (Empty) returns (Status);
 
-   rpc InitCamera (Empty) returns (Status);
-   rpc CleanupCamera (Empty) returns (Status);
    rpc ActivateCamera (Empty) returns (Status);
    rpc DeactivateCamera (Empty) returns (Status);
    rpc ConfigureCamera (CameraConfig) returns (Status);

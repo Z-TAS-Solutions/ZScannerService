@@ -566,7 +566,7 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\bCAMREADY\x10\x00\x12\r\n" +
 	"\tCAMACTIVE\x10\x01\x12\x0f\n" +
 	"\vCAMINACTIVE\x10\x02\x12\x0f\n" +
-	"\vCAMDISABLED\x10\x032\xb8\x05\n" +
+	"\vCAMDISABLED\x10\x032\xcb\x04\n" +
 	"\rZPiController\x12@\n" +
 	"\fSetLEDStatus\x12\x1c.zscanproto.LEDStatusRequest\x1a\x12.zscanproto.Status\x121\n" +
 	"\x06GetLED\x12\x11.zscanproto.Empty\x1a\x14.zscanproto.LEDState\x129\n" +
@@ -575,10 +575,7 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\n" +
 	"DisableToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x124\n" +
 	"\vActivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x126\n" +
-	"\rDeactivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x123\n" +
-	"\n" +
-	"InitCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x126\n" +
-	"\rCleanupCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x127\n" +
+	"\rDeactivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x127\n" +
 	"\x0eActivateCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x129\n" +
 	"\x10DeactivateCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x12?\n" +
 	"\x0fConfigureCamera\x12\x18.zscanproto.CameraConfig\x1a\x12.zscanproto.StatusB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
@@ -619,25 +616,21 @@ var file_ZScanProto_proto_depIdxs = []int32{
 	3,  // 6: zscanproto.ZPiController.DisableToF:input_type -> zscanproto.Empty
 	3,  // 7: zscanproto.ZPiController.ActivateToF:input_type -> zscanproto.Empty
 	3,  // 8: zscanproto.ZPiController.DeactivateToF:input_type -> zscanproto.Empty
-	3,  // 9: zscanproto.ZPiController.InitCamera:input_type -> zscanproto.Empty
-	3,  // 10: zscanproto.ZPiController.CleanupCamera:input_type -> zscanproto.Empty
-	3,  // 11: zscanproto.ZPiController.ActivateCamera:input_type -> zscanproto.Empty
-	3,  // 12: zscanproto.ZPiController.DeactivateCamera:input_type -> zscanproto.Empty
-	9,  // 13: zscanproto.ZPiController.ConfigureCamera:input_type -> zscanproto.CameraConfig
-	4,  // 14: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
-	6,  // 15: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
-	4,  // 16: zscanproto.ZPiController.ConfigureToF:output_type -> zscanproto.Status
-	4,  // 17: zscanproto.ZPiController.EnableToF:output_type -> zscanproto.Status
-	4,  // 18: zscanproto.ZPiController.DisableToF:output_type -> zscanproto.Status
-	4,  // 19: zscanproto.ZPiController.ActivateToF:output_type -> zscanproto.Status
-	4,  // 20: zscanproto.ZPiController.DeactivateToF:output_type -> zscanproto.Status
-	4,  // 21: zscanproto.ZPiController.InitCamera:output_type -> zscanproto.Status
-	4,  // 22: zscanproto.ZPiController.CleanupCamera:output_type -> zscanproto.Status
-	4,  // 23: zscanproto.ZPiController.ActivateCamera:output_type -> zscanproto.Status
-	4,  // 24: zscanproto.ZPiController.DeactivateCamera:output_type -> zscanproto.Status
-	4,  // 25: zscanproto.ZPiController.ConfigureCamera:output_type -> zscanproto.Status
-	14, // [14:26] is the sub-list for method output_type
-	2,  // [2:14] is the sub-list for method input_type
+	3,  // 9: zscanproto.ZPiController.ActivateCamera:input_type -> zscanproto.Empty
+	3,  // 10: zscanproto.ZPiController.DeactivateCamera:input_type -> zscanproto.Empty
+	9,  // 11: zscanproto.ZPiController.ConfigureCamera:input_type -> zscanproto.CameraConfig
+	4,  // 12: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
+	6,  // 13: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
+	4,  // 14: zscanproto.ZPiController.ConfigureToF:output_type -> zscanproto.Status
+	4,  // 15: zscanproto.ZPiController.EnableToF:output_type -> zscanproto.Status
+	4,  // 16: zscanproto.ZPiController.DisableToF:output_type -> zscanproto.Status
+	4,  // 17: zscanproto.ZPiController.ActivateToF:output_type -> zscanproto.Status
+	4,  // 18: zscanproto.ZPiController.DeactivateToF:output_type -> zscanproto.Status
+	4,  // 19: zscanproto.ZPiController.ActivateCamera:output_type -> zscanproto.Status
+	4,  // 20: zscanproto.ZPiController.DeactivateCamera:output_type -> zscanproto.Status
+	4,  // 21: zscanproto.ZPiController.ConfigureCamera:output_type -> zscanproto.Status
+	12, // [12:22] is the sub-list for method output_type
+	2,  // [2:12] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name

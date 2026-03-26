@@ -6,6 +6,7 @@ import (
 	"log"
 	"time"
 
+	zpi_camera "github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zpi_cam"
 	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zpi_indicator"
 	zpi_trigger "github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zpi_tof"
 	"github.com/Z-TAS-Solutions/ZScannerService/internal/pkg/zscanproto"
@@ -21,6 +22,9 @@ type ControllerServer struct {
 	triggerStatus       zscanproto.ToFState
 	triggerDeactivation context.CancelFunc
 
+	camProcess *zpi_camera.CameraProcess
+	camStatus  zscanproto.CamState
+	camConfig  *zscanproto.CameraConfig
 	peerClient zscanproto.ZPiControllerClient
 }
 

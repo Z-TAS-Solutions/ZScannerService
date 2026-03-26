@@ -29,7 +29,7 @@ func NewControllerServer(indicator *zpi_indicator.ZLED, trigger *zpi_trigger.ZTo
 var statusColors = map[zscanproto.LEDStatus][3]uint32{
 	zscanproto.LEDStatus_VOID:    {0, 0, 0},
 	zscanproto.LEDStatus_SUCCESS: {0, 255, 0},
-	zscanproto.LEDStatus_PENDING: {255, 255, 0},
+	zscanproto.LEDStatus_PENDING: {0, 0, 255},
 	zscanproto.LEDStatus_FAILED:  {255, 0, 0},
 }
 

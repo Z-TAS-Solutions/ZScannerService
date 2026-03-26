@@ -13,13 +13,15 @@ import (
 
 type ControllerServer struct {
 	zscanproto.UnimplementedZPiControllerServer
-	indicator           *zpi_indicator.ZLED
-	indicatorStatus     zscanproto.LEDStatus
+	indicator       *zpi_indicator.ZLED
+	indicatorStatus zscanproto.LEDStatus
+
 	trigger             *zpi_trigger.ZToF
 	triggerThreshold    uint16
 	triggerStatus       zscanproto.ToFState
 	triggerDeactivation context.CancelFunc
-	peerClient          zscanproto.ZPiControllerClient
+
+	peerClient zscanproto.ZPiControllerClient
 }
 
 func NewControllerServer(indicator *zpi_indicator.ZLED, trigger *zpi_trigger.ZToF) *ControllerServer {

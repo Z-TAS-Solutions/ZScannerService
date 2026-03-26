@@ -125,6 +125,58 @@ func (ToFState) EnumDescriptor() ([]byte, []int) {
 	return file_ZScanProto_proto_rawDescGZIP(), []int{1}
 }
 
+type CamState int32
+
+const (
+	CamState_CAMREADY    CamState = 0
+	CamState_CAMACTIVE   CamState = 1
+	CamState_CAMINACTIVE CamState = 2
+	CamState_CAMDISABLED CamState = 3
+)
+
+// Enum value maps for CamState.
+var (
+	CamState_name = map[int32]string{
+		0: "CAMREADY",
+		1: "CAMACTIVE",
+		2: "CAMINACTIVE",
+		3: "CAMDISABLED",
+	}
+	CamState_value = map[string]int32{
+		"CAMREADY":    0,
+		"CAMACTIVE":   1,
+		"CAMINACTIVE": 2,
+		"CAMDISABLED": 3,
+	}
+)
+
+func (x CamState) Enum() *CamState {
+	p := new(CamState)
+	*p = x
+	return p
+}
+
+func (x CamState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CamState) Descriptor() protoreflect.EnumDescriptor {
+	return file_ZScanProto_proto_enumTypes[2].Descriptor()
+}
+
+func (CamState) Type() protoreflect.EnumType {
+	return &file_ZScanProto_proto_enumTypes[2]
+}
+
+func (x CamState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CamState.Descriptor instead.
+func (CamState) EnumDescriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{2}
+}
+
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -361,6 +413,118 @@ func (x *ToFConfig) GetThreshold() uint32 {
 	return 0
 }
 
+type CameraStatus struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	State         CamState               `protobuf:"varint,1,opt,name=state,proto3,enum=zscanproto.CamState" json:"state,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CameraStatus) Reset() {
+	*x = CameraStatus{}
+	mi := &file_ZScanProto_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CameraStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CameraStatus) ProtoMessage() {}
+
+func (x *CameraStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_ZScanProto_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CameraStatus.ProtoReflect.Descriptor instead.
+func (*CameraStatus) Descriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CameraStatus) GetState() CamState {
+	if x != nil {
+		return x.State
+	}
+	return CamState_CAMREADY
+}
+
+func (x *CameraStatus) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type CameraConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Width         uint32                 `protobuf:"varint,1,opt,name=width,proto3" json:"width,omitempty"`
+	Height        uint32                 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	Fps           uint32                 `protobuf:"varint,3,opt,name=fps,proto3" json:"fps,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CameraConfig) Reset() {
+	*x = CameraConfig{}
+	mi := &file_ZScanProto_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CameraConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CameraConfig) ProtoMessage() {}
+
+func (x *CameraConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_ZScanProto_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CameraConfig.ProtoReflect.Descriptor instead.
+func (*CameraConfig) Descriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CameraConfig) GetWidth() uint32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *CameraConfig) GetHeight() uint32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *CameraConfig) GetFps() uint32 {
+	if x != nil {
+		return x.Fps
+	}
+	return 0
+}
+
 var File_ZScanProto_proto protoreflect.FileDescriptor
 
 const file_ZScanProto_proto_rawDesc = "" +
@@ -378,7 +542,14 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\x05green\x18\x02 \x01(\rR\x05green\x12\x12\n" +
 	"\x04blue\x18\x03 \x01(\rR\x04blue\")\n" +
 	"\tToFConfig\x12\x1c\n" +
-	"\tthreshold\x18\x01 \x01(\rR\tthreshold*;\n" +
+	"\tthreshold\x18\x01 \x01(\rR\tthreshold\"T\n" +
+	"\fCameraStatus\x12*\n" +
+	"\x05state\x18\x01 \x01(\x0e2\x14.zscanproto.CamStateR\x05state\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"N\n" +
+	"\fCameraConfig\x12\x14\n" +
+	"\x05width\x18\x01 \x01(\rR\x05width\x12\x16\n" +
+	"\x06height\x18\x02 \x01(\rR\x06height\x12\x10\n" +
+	"\x03fps\x18\x03 \x01(\rR\x03fps*;\n" +
 	"\tLEDStatus\x12\b\n" +
 	"\x04VOID\x10\x00\x12\v\n" +
 	"\aSUCCESS\x10\x01\x12\v\n" +
@@ -390,7 +561,12 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\n" +
 	"ToFEnabled\x10\x01\x12\x0f\n" +
 	"\vToFInactive\x10\x02\x12\r\n" +
-	"\tToFActive\x10\x032\x96\x03\n" +
+	"\tToFActive\x10\x03*I\n" +
+	"\bCamState\x12\f\n" +
+	"\bCAMREADY\x10\x00\x12\r\n" +
+	"\tCAMACTIVE\x10\x01\x12\x0f\n" +
+	"\vCAMINACTIVE\x10\x02\x12\x0f\n" +
+	"\vCAMDISABLED\x10\x032\xb8\x05\n" +
 	"\rZPiController\x12@\n" +
 	"\fSetLEDStatus\x12\x1c.zscanproto.LEDStatusRequest\x1a\x12.zscanproto.Status\x121\n" +
 	"\x06GetLED\x12\x11.zscanproto.Empty\x1a\x14.zscanproto.LEDState\x129\n" +
@@ -399,7 +575,13 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\n" +
 	"DisableToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x124\n" +
 	"\vActivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x126\n" +
-	"\rDeactivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.StatusB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
+	"\rDeactivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x123\n" +
+	"\n" +
+	"InitCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x126\n" +
+	"\rCleanupCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x127\n" +
+	"\x0eActivateCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x129\n" +
+	"\x10DeactivateCamera\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x12?\n" +
+	"\x0fConfigureCamera\x12\x18.zscanproto.CameraConfig\x1a\x12.zscanproto.StatusB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
 
 var (
 	file_ZScanProto_proto_rawDescOnce sync.Once
@@ -413,38 +595,52 @@ func file_ZScanProto_proto_rawDescGZIP() []byte {
 	return file_ZScanProto_proto_rawDescData
 }
 
-var file_ZScanProto_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_ZScanProto_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_ZScanProto_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_ZScanProto_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_ZScanProto_proto_goTypes = []any{
 	(LEDStatus)(0),           // 0: zscanproto.LEDStatus
 	(ToFState)(0),            // 1: zscanproto.ToFState
-	(*Empty)(nil),            // 2: zscanproto.Empty
-	(*Status)(nil),           // 3: zscanproto.Status
-	(*LEDStatusRequest)(nil), // 4: zscanproto.LEDStatusRequest
-	(*LEDState)(nil),         // 5: zscanproto.LEDState
-	(*ToFConfig)(nil),        // 6: zscanproto.ToFConfig
+	(CamState)(0),            // 2: zscanproto.CamState
+	(*Empty)(nil),            // 3: zscanproto.Empty
+	(*Status)(nil),           // 4: zscanproto.Status
+	(*LEDStatusRequest)(nil), // 5: zscanproto.LEDStatusRequest
+	(*LEDState)(nil),         // 6: zscanproto.LEDState
+	(*ToFConfig)(nil),        // 7: zscanproto.ToFConfig
+	(*CameraStatus)(nil),     // 8: zscanproto.CameraStatus
+	(*CameraConfig)(nil),     // 9: zscanproto.CameraConfig
 }
 var file_ZScanProto_proto_depIdxs = []int32{
-	0, // 0: zscanproto.LEDStatusRequest.status:type_name -> zscanproto.LEDStatus
-	4, // 1: zscanproto.ZPiController.SetLEDStatus:input_type -> zscanproto.LEDStatusRequest
-	2, // 2: zscanproto.ZPiController.GetLED:input_type -> zscanproto.Empty
-	6, // 3: zscanproto.ZPiController.ConfigureToF:input_type -> zscanproto.ToFConfig
-	2, // 4: zscanproto.ZPiController.EnableToF:input_type -> zscanproto.Empty
-	2, // 5: zscanproto.ZPiController.DisableToF:input_type -> zscanproto.Empty
-	2, // 6: zscanproto.ZPiController.ActivateToF:input_type -> zscanproto.Empty
-	2, // 7: zscanproto.ZPiController.DeactivateToF:input_type -> zscanproto.Empty
-	3, // 8: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
-	5, // 9: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
-	3, // 10: zscanproto.ZPiController.ConfigureToF:output_type -> zscanproto.Status
-	3, // 11: zscanproto.ZPiController.EnableToF:output_type -> zscanproto.Status
-	3, // 12: zscanproto.ZPiController.DisableToF:output_type -> zscanproto.Status
-	3, // 13: zscanproto.ZPiController.ActivateToF:output_type -> zscanproto.Status
-	3, // 14: zscanproto.ZPiController.DeactivateToF:output_type -> zscanproto.Status
-	8, // [8:15] is the sub-list for method output_type
-	1, // [1:8] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0,  // 0: zscanproto.LEDStatusRequest.status:type_name -> zscanproto.LEDStatus
+	2,  // 1: zscanproto.CameraStatus.state:type_name -> zscanproto.CamState
+	5,  // 2: zscanproto.ZPiController.SetLEDStatus:input_type -> zscanproto.LEDStatusRequest
+	3,  // 3: zscanproto.ZPiController.GetLED:input_type -> zscanproto.Empty
+	7,  // 4: zscanproto.ZPiController.ConfigureToF:input_type -> zscanproto.ToFConfig
+	3,  // 5: zscanproto.ZPiController.EnableToF:input_type -> zscanproto.Empty
+	3,  // 6: zscanproto.ZPiController.DisableToF:input_type -> zscanproto.Empty
+	3,  // 7: zscanproto.ZPiController.ActivateToF:input_type -> zscanproto.Empty
+	3,  // 8: zscanproto.ZPiController.DeactivateToF:input_type -> zscanproto.Empty
+	3,  // 9: zscanproto.ZPiController.InitCamera:input_type -> zscanproto.Empty
+	3,  // 10: zscanproto.ZPiController.CleanupCamera:input_type -> zscanproto.Empty
+	3,  // 11: zscanproto.ZPiController.ActivateCamera:input_type -> zscanproto.Empty
+	3,  // 12: zscanproto.ZPiController.DeactivateCamera:input_type -> zscanproto.Empty
+	9,  // 13: zscanproto.ZPiController.ConfigureCamera:input_type -> zscanproto.CameraConfig
+	4,  // 14: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
+	6,  // 15: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
+	4,  // 16: zscanproto.ZPiController.ConfigureToF:output_type -> zscanproto.Status
+	4,  // 17: zscanproto.ZPiController.EnableToF:output_type -> zscanproto.Status
+	4,  // 18: zscanproto.ZPiController.DisableToF:output_type -> zscanproto.Status
+	4,  // 19: zscanproto.ZPiController.ActivateToF:output_type -> zscanproto.Status
+	4,  // 20: zscanproto.ZPiController.DeactivateToF:output_type -> zscanproto.Status
+	4,  // 21: zscanproto.ZPiController.InitCamera:output_type -> zscanproto.Status
+	4,  // 22: zscanproto.ZPiController.CleanupCamera:output_type -> zscanproto.Status
+	4,  // 23: zscanproto.ZPiController.ActivateCamera:output_type -> zscanproto.Status
+	4,  // 24: zscanproto.ZPiController.DeactivateCamera:output_type -> zscanproto.Status
+	4,  // 25: zscanproto.ZPiController.ConfigureCamera:output_type -> zscanproto.Status
+	14, // [14:26] is the sub-list for method output_type
+	2,  // [2:14] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_ZScanProto_proto_init() }
@@ -457,8 +653,8 @@ func file_ZScanProto_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ZScanProto_proto_rawDesc), len(file_ZScanProto_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   5,
+			NumEnums:      3,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

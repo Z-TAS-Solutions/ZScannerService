@@ -39,6 +39,26 @@ message ToFConfig {
   uint32 threshold = 1;
 }
 
+
+enum CamState {
+  CAMREADY = 0;
+  CAMACTIVE = 1;
+  CAMINACTIVE = 2;
+  CAMDISABLED = 3;
+}
+
+message CameraStatus {
+  CamState state = 1;
+  string message = 2;
+}
+
+message CameraConfig {
+  uint32 width = 1;
+  uint32 height = 2;
+  uint32 fps = 3;
+}
+
+
 service ZPiController {
    rpc SetLEDStatus (LEDStatusRequest) returns (Status);
    rpc GetLED (Empty) returns (LEDState);
@@ -48,4 +68,10 @@ service ZPiController {
    rpc DisableToF (Empty) returns (Status);   
    rpc ActivateToF (Empty) returns (Status); 
    rpc DeactivateToF (Empty) returns (Status);
+
+   rpc InitCamera (Empty) returns (Status);
+   rpc CleanupCamera (Empty) returns (Status);
+   rpc ActivateCamera (Empty) returns (Status);
+   rpc DeactivateCamera (Empty) returns (Status);
+   rpc ConfigureCamera (CameraConfig) returns (Status);
 }

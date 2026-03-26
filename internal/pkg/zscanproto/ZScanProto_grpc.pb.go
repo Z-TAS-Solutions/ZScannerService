@@ -19,8 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ZPiController_SetLEDStatus_FullMethodName = "/zscanproto.ZPiController/SetLEDStatus"
-	ZPiController_GetLED_FullMethodName       = "/zscanproto.ZPiController/GetLED"
+	ZPiController_SetLEDStatus_FullMethodName  = "/zscanproto.ZPiController/SetLEDStatus"
+	ZPiController_GetLED_FullMethodName        = "/zscanproto.ZPiController/GetLED"
+	ZPiController_ConfigureToF_FullMethodName  = "/zscanproto.ZPiController/ConfigureToF"
+	ZPiController_EnableToF_FullMethodName     = "/zscanproto.ZPiController/EnableToF"
+	ZPiController_DisableToF_FullMethodName    = "/zscanproto.ZPiController/DisableToF"
+	ZPiController_ActivateToF_FullMethodName   = "/zscanproto.ZPiController/ActivateToF"
+	ZPiController_DeactivateToF_FullMethodName = "/zscanproto.ZPiController/DeactivateToF"
 )
 
 // ZPiControllerClient is the client API for ZPiController service.
@@ -29,6 +34,11 @@ const (
 type ZPiControllerClient interface {
 	SetLEDStatus(ctx context.Context, in *LEDStatusRequest, opts ...grpc.CallOption) (*Status, error)
 	GetLED(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*LEDState, error)
+	ConfigureToF(ctx context.Context, in *ToFConfig, opts ...grpc.CallOption) (*Status, error)
+	EnableToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error)
+	DisableToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error)
+	ActivateToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error)
+	DeactivateToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error)
 }
 
 type zPiControllerClient struct {
@@ -59,12 +69,67 @@ func (c *zPiControllerClient) GetLED(ctx context.Context, in *Empty, opts ...grp
 	return out, nil
 }
 
+func (c *zPiControllerClient) ConfigureToF(ctx context.Context, in *ToFConfig, opts ...grpc.CallOption) (*Status, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Status)
+	err := c.cc.Invoke(ctx, ZPiController_ConfigureToF_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *zPiControllerClient) EnableToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Status)
+	err := c.cc.Invoke(ctx, ZPiController_EnableToF_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *zPiControllerClient) DisableToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Status)
+	err := c.cc.Invoke(ctx, ZPiController_DisableToF_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *zPiControllerClient) ActivateToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Status)
+	err := c.cc.Invoke(ctx, ZPiController_ActivateToF_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *zPiControllerClient) DeactivateToF(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Status, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Status)
+	err := c.cc.Invoke(ctx, ZPiController_DeactivateToF_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ZPiControllerServer is the server API for ZPiController service.
 // All implementations must embed UnimplementedZPiControllerServer
 // for forward compatibility.
 type ZPiControllerServer interface {
 	SetLEDStatus(context.Context, *LEDStatusRequest) (*Status, error)
 	GetLED(context.Context, *Empty) (*LEDState, error)
+	ConfigureToF(context.Context, *ToFConfig) (*Status, error)
+	EnableToF(context.Context, *Empty) (*Status, error)
+	DisableToF(context.Context, *Empty) (*Status, error)
+	ActivateToF(context.Context, *Empty) (*Status, error)
+	DeactivateToF(context.Context, *Empty) (*Status, error)
 	mustEmbedUnimplementedZPiControllerServer()
 }
 
@@ -80,6 +145,21 @@ func (UnimplementedZPiControllerServer) SetLEDStatus(context.Context, *LEDStatus
 }
 func (UnimplementedZPiControllerServer) GetLED(context.Context, *Empty) (*LEDState, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetLED not implemented")
+}
+func (UnimplementedZPiControllerServer) ConfigureToF(context.Context, *ToFConfig) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method ConfigureToF not implemented")
+}
+func (UnimplementedZPiControllerServer) EnableToF(context.Context, *Empty) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method EnableToF not implemented")
+}
+func (UnimplementedZPiControllerServer) DisableToF(context.Context, *Empty) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method DisableToF not implemented")
+}
+func (UnimplementedZPiControllerServer) ActivateToF(context.Context, *Empty) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method ActivateToF not implemented")
+}
+func (UnimplementedZPiControllerServer) DeactivateToF(context.Context, *Empty) (*Status, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeactivateToF not implemented")
 }
 func (UnimplementedZPiControllerServer) mustEmbedUnimplementedZPiControllerServer() {}
 func (UnimplementedZPiControllerServer) testEmbeddedByValue()                       {}
@@ -138,6 +218,96 @@ func _ZPiController_GetLED_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ZPiController_ConfigureToF_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToFConfig)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ZPiControllerServer).ConfigureToF(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ZPiController_ConfigureToF_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ZPiControllerServer).ConfigureToF(ctx, req.(*ToFConfig))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ZPiController_EnableToF_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ZPiControllerServer).EnableToF(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ZPiController_EnableToF_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ZPiControllerServer).EnableToF(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ZPiController_DisableToF_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ZPiControllerServer).DisableToF(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ZPiController_DisableToF_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ZPiControllerServer).DisableToF(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ZPiController_ActivateToF_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ZPiControllerServer).ActivateToF(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ZPiController_ActivateToF_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ZPiControllerServer).ActivateToF(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ZPiController_DeactivateToF_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ZPiControllerServer).DeactivateToF(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ZPiController_DeactivateToF_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ZPiControllerServer).DeactivateToF(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ZPiController_ServiceDesc is the grpc.ServiceDesc for ZPiController service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +322,26 @@ var ZPiController_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLED",
 			Handler:    _ZPiController_GetLED_Handler,
+		},
+		{
+			MethodName: "ConfigureToF",
+			Handler:    _ZPiController_ConfigureToF_Handler,
+		},
+		{
+			MethodName: "EnableToF",
+			Handler:    _ZPiController_EnableToF_Handler,
+		},
+		{
+			MethodName: "DisableToF",
+			Handler:    _ZPiController_DisableToF_Handler,
+		},
+		{
+			MethodName: "ActivateToF",
+			Handler:    _ZPiController_ActivateToF_Handler,
+		},
+		{
+			MethodName: "DeactivateToF",
+			Handler:    _ZPiController_DeactivateToF_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

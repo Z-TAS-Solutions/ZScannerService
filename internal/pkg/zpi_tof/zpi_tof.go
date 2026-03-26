@@ -1,9 +1,8 @@
 package zpi_trigger
 
 import (
-	"log"
 	"fmt"
-	
+
 	"github.com/d2r2/go-i2c"
 	"github.com/d2r2/go-vl53l0x"
 	"periph.io/x/host/v3"
@@ -44,13 +43,12 @@ func (t *ZToF) Read() (uint16, error) {
 	if err != nil {
 		return 0, err
 	}
-	log.Printf("Measured range = %v mm", distance)
+	//log.Printf("Measured range = %v mm", distance)
 
 	t.lastDistance = uint16(distance)
 
 	return t.lastDistance, nil
 }
-
 
 func (t *ZToF) Close() error {
 	if t.i2c_bus != nil {

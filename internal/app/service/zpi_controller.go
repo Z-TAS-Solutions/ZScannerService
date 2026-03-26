@@ -13,10 +13,13 @@ import (
 
 type ControllerServer struct {
 	zscanproto.UnimplementedZPiControllerServer
-	indicator       *zpi_indicator.ZLED
-	indicatorStatus zscanproto.LEDStatus
-	trigger         *zpi_trigger.ZToF
-	peerClient      zscanproto.ZPiControllerClient
+	indicator           *zpi_indicator.ZLED
+	indicatorStatus     zscanproto.LEDStatus
+	trigger             *zpi_trigger.ZToF
+	triggerThreshold    uint16
+	triggerStatus       zscanproto.ToFState
+	triggerDeactivation context.CancelFunc
+	peerClient          zscanproto.ZPiControllerClient
 }
 
 func NewControllerServer(indicator *zpi_indicator.ZLED, trigger *zpi_trigger.ZToF) *ControllerServer {
@@ -53,9 +56,98 @@ func (s *ControllerServer) SetPeerClient(client zscanproto.ZPiControllerClient) 
 	s.peerClient = client
 }
 
-func (s *ControllerServer) StartToFMonitor(threshold uint16) {
-	go func() {
-		for {
+func (s *ControllerServer) ConfigureToF(ctx context.Context, req *zscanproto.ToFConfig) (*zscanproto.Status, error) {
+	previousState := s.triggerStatus
+
+	if previousState == zscanproto.ToFState_ToFActive {
+		if s.triggerDeactivation != nil {
+			s.triggerDeactivation()
+		}
+		s.triggerStatus = zscanproto.ToFState_ToFInactive
+	}
+
+	s.triggerThreshold = uint16(req.Threshold)
+
+	if previousState == zscanproto.ToFState_ToFActive {
+		loopCtx, cancel := context.WithCancel(context.Background())
+		s.triggerDeactivation = cancel
+		s.triggerStatus = zscanproto.ToFState_ToFActive
+		go s.StartToFMonitor(loopCtx)
+	}
+
+	return &zscanproto.Status{
+		Success: true,
+		Message: fmt.Sprintf("ToF configured : Threshold set to (threshold=%d)mm", req.Threshold),
+	}, nil
+}
+
+func (s *ControllerServer) EnableToF(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	if s.triggerStatus != zscanproto.ToFState_ToFDisabled {
+		return &zscanproto.Status{Success: true, Message: "Already enabled"}, nil
+	}
+
+	triggerModule, error := zpi_trigger.NewZToF()
+	if error != nil {
+		log.Println("Failed To Initialize Trigger Module !")
+		return &zscanproto.Status{Success: false, Message: "Failed to initialize ToF module"}, nil
+	}
+	s.trigger = triggerModule
+
+	s.triggerStatus = zscanproto.ToFState_ToFInactive
+
+	return &zscanproto.Status{Success: true, Message: "ToF enabled"}, nil
+}
+
+func (s *ControllerServer) DisableToF(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	if s.triggerStatus == zscanproto.ToFState_ToFDisabled {
+		return &zscanproto.Status{Success: true, Message: "Already disabled"}, nil
+	}
+
+	if s.triggerStatus == zscanproto.ToFState_ToFActive {
+		if s.triggerDeactivation != nil {
+			s.triggerDeactivation()
+		}
+	}
+
+	s.triggerStatus = zscanproto.ToFState_ToFDisabled
+
+	return &zscanproto.Status{Success: true, Message: "ToF disabled"}, nil
+}
+
+func (s *ControllerServer) ActivateToF(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	if s.triggerStatus != zscanproto.ToFState_ToFInactive {
+		return &zscanproto.Status{Success: false, Message: "ToF not ready for activation"}, nil
+	}
+
+	loopCtx, cancel := context.WithCancel(context.Background())
+	s.triggerDeactivation = cancel
+
+	s.triggerStatus = zscanproto.ToFState_ToFActive
+
+	go s.StartToFMonitor(loopCtx)
+
+	return &zscanproto.Status{Success: true, Message: "ToF activated"}, nil
+}
+
+func (s *ControllerServer) DeactivateToF(ctx context.Context, _ *zscanproto.Empty) (*zscanproto.Status, error) {
+	if s.triggerStatus != zscanproto.ToFState_ToFActive {
+		return &zscanproto.Status{Success: true, Message: "Already inactive"}, nil
+	}
+
+	s.triggerDeactivation()
+
+	s.triggerStatus = zscanproto.ToFState_ToFInactive
+
+	return &zscanproto.Status{Success: true, Message: "ToF deactivated"}, nil
+}
+
+func (s *ControllerServer) StartToFMonitor(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			log.Println("ToF monitor stopped")
+			return
+		default:
 			distance, err := s.trigger.Read()
 			if err != nil {
 				log.Println("ToF read error:", err)
@@ -64,10 +156,10 @@ func (s *ControllerServer) StartToFMonitor(threshold uint16) {
 			}
 
 			var newState zscanproto.LEDStatus
-			if distance < threshold {
-				newState = zscanproto.LEDStatus_VOID
-			} else {
+			if distance < s.triggerThreshold {
 				newState = zscanproto.LEDStatus_FAILED
+			} else {
+				newState = zscanproto.LEDStatus_VOID
 			}
 
 			if newState != s.indicatorStatus {
@@ -90,5 +182,6 @@ func (s *ControllerServer) StartToFMonitor(threshold uint16) {
 
 			time.Sleep(50 * time.Millisecond)
 		}
-	}()
+	}
+
 }

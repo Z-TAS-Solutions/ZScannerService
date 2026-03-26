@@ -27,7 +27,25 @@ message LEDState {
   uint32 blue = 3;
 }
 
+
+enum ToFState {
+	ToFDisabled = 0;
+	ToFEnabled = 1;
+  ToFInactive = 2; 
+	ToFActive = 3;
+}
+
+message ToFConfig {
+  uint32 threshold = 1;
+}
+
 service ZPiController {
    rpc SetLEDStatus (LEDStatusRequest) returns (Status);
    rpc GetLED (Empty) returns (LEDState);
+
+   rpc ConfigureToF (ToFConfig) returns (Status);
+   rpc EnableToF (Empty) returns (Status);    
+   rpc DisableToF (Empty) returns (Status);   
+   rpc ActivateToF (Empty) returns (Status); 
+   rpc DeactivateToF (Empty) returns (Status);
 }

@@ -73,6 +73,58 @@ func (LEDStatus) EnumDescriptor() ([]byte, []int) {
 	return file_ZScanProto_proto_rawDescGZIP(), []int{0}
 }
 
+type ToFState int32
+
+const (
+	ToFState_ToFDisabled ToFState = 0
+	ToFState_ToFEnabled  ToFState = 1
+	ToFState_ToFInactive ToFState = 2
+	ToFState_ToFActive   ToFState = 3
+)
+
+// Enum value maps for ToFState.
+var (
+	ToFState_name = map[int32]string{
+		0: "ToFDisabled",
+		1: "ToFEnabled",
+		2: "ToFInactive",
+		3: "ToFActive",
+	}
+	ToFState_value = map[string]int32{
+		"ToFDisabled": 0,
+		"ToFEnabled":  1,
+		"ToFInactive": 2,
+		"ToFActive":   3,
+	}
+)
+
+func (x ToFState) Enum() *ToFState {
+	p := new(ToFState)
+	*p = x
+	return p
+}
+
+func (x ToFState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ToFState) Descriptor() protoreflect.EnumDescriptor {
+	return file_ZScanProto_proto_enumTypes[1].Descriptor()
+}
+
+func (ToFState) Type() protoreflect.EnumType {
+	return &file_ZScanProto_proto_enumTypes[1]
+}
+
+func (x ToFState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ToFState.Descriptor instead.
+func (ToFState) EnumDescriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{1}
+}
+
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -265,6 +317,50 @@ func (x *LEDState) GetBlue() uint32 {
 	return 0
 }
 
+type ToFConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Threshold     uint32                 `protobuf:"varint,1,opt,name=threshold,proto3" json:"threshold,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToFConfig) Reset() {
+	*x = ToFConfig{}
+	mi := &file_ZScanProto_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToFConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToFConfig) ProtoMessage() {}
+
+func (x *ToFConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_ZScanProto_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToFConfig.ProtoReflect.Descriptor instead.
+func (*ToFConfig) Descriptor() ([]byte, []int) {
+	return file_ZScanProto_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ToFConfig) GetThreshold() uint32 {
+	if x != nil {
+		return x.Threshold
+	}
+	return 0
+}
+
 var File_ZScanProto_proto protoreflect.FileDescriptor
 
 const file_ZScanProto_proto_rawDesc = "" +
@@ -280,16 +376,30 @@ const file_ZScanProto_proto_rawDesc = "" +
 	"\bLEDState\x12\x10\n" +
 	"\x03red\x18\x01 \x01(\rR\x03red\x12\x14\n" +
 	"\x05green\x18\x02 \x01(\rR\x05green\x12\x12\n" +
-	"\x04blue\x18\x03 \x01(\rR\x04blue*;\n" +
+	"\x04blue\x18\x03 \x01(\rR\x04blue\")\n" +
+	"\tToFConfig\x12\x1c\n" +
+	"\tthreshold\x18\x01 \x01(\rR\tthreshold*;\n" +
 	"\tLEDStatus\x12\b\n" +
 	"\x04VOID\x10\x00\x12\v\n" +
 	"\aSUCCESS\x10\x01\x12\v\n" +
 	"\aPENDING\x10\x02\x12\n" +
 	"\n" +
-	"\x06FAILED\x10\x032\x84\x01\n" +
+	"\x06FAILED\x10\x03*K\n" +
+	"\bToFState\x12\x0f\n" +
+	"\vToFDisabled\x10\x00\x12\x0e\n" +
+	"\n" +
+	"ToFEnabled\x10\x01\x12\x0f\n" +
+	"\vToFInactive\x10\x02\x12\r\n" +
+	"\tToFActive\x10\x032\x96\x03\n" +
 	"\rZPiController\x12@\n" +
 	"\fSetLEDStatus\x12\x1c.zscanproto.LEDStatusRequest\x1a\x12.zscanproto.Status\x121\n" +
-	"\x06GetLED\x12\x11.zscanproto.Empty\x1a\x14.zscanproto.LEDStateB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
+	"\x06GetLED\x12\x11.zscanproto.Empty\x1a\x14.zscanproto.LEDState\x129\n" +
+	"\fConfigureToF\x12\x15.zscanproto.ToFConfig\x1a\x12.zscanproto.Status\x122\n" +
+	"\tEnableToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x123\n" +
+	"\n" +
+	"DisableToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x124\n" +
+	"\vActivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.Status\x126\n" +
+	"\rDeactivateToF\x12\x11.zscanproto.Empty\x1a\x12.zscanproto.StatusB\x1cZ\x1a./internal/pkg/zscanproto/b\x06proto3"
 
 var (
 	file_ZScanProto_proto_rawDescOnce sync.Once
@@ -303,23 +413,35 @@ func file_ZScanProto_proto_rawDescGZIP() []byte {
 	return file_ZScanProto_proto_rawDescData
 }
 
-var file_ZScanProto_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_ZScanProto_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_ZScanProto_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_ZScanProto_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_ZScanProto_proto_goTypes = []any{
 	(LEDStatus)(0),           // 0: zscanproto.LEDStatus
-	(*Empty)(nil),            // 1: zscanproto.Empty
-	(*Status)(nil),           // 2: zscanproto.Status
-	(*LEDStatusRequest)(nil), // 3: zscanproto.LEDStatusRequest
-	(*LEDState)(nil),         // 4: zscanproto.LEDState
+	(ToFState)(0),            // 1: zscanproto.ToFState
+	(*Empty)(nil),            // 2: zscanproto.Empty
+	(*Status)(nil),           // 3: zscanproto.Status
+	(*LEDStatusRequest)(nil), // 4: zscanproto.LEDStatusRequest
+	(*LEDState)(nil),         // 5: zscanproto.LEDState
+	(*ToFConfig)(nil),        // 6: zscanproto.ToFConfig
 }
 var file_ZScanProto_proto_depIdxs = []int32{
 	0, // 0: zscanproto.LEDStatusRequest.status:type_name -> zscanproto.LEDStatus
-	3, // 1: zscanproto.ZPiController.SetLEDStatus:input_type -> zscanproto.LEDStatusRequest
-	1, // 2: zscanproto.ZPiController.GetLED:input_type -> zscanproto.Empty
-	2, // 3: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
-	4, // 4: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
+	4, // 1: zscanproto.ZPiController.SetLEDStatus:input_type -> zscanproto.LEDStatusRequest
+	2, // 2: zscanproto.ZPiController.GetLED:input_type -> zscanproto.Empty
+	6, // 3: zscanproto.ZPiController.ConfigureToF:input_type -> zscanproto.ToFConfig
+	2, // 4: zscanproto.ZPiController.EnableToF:input_type -> zscanproto.Empty
+	2, // 5: zscanproto.ZPiController.DisableToF:input_type -> zscanproto.Empty
+	2, // 6: zscanproto.ZPiController.ActivateToF:input_type -> zscanproto.Empty
+	2, // 7: zscanproto.ZPiController.DeactivateToF:input_type -> zscanproto.Empty
+	3, // 8: zscanproto.ZPiController.SetLEDStatus:output_type -> zscanproto.Status
+	5, // 9: zscanproto.ZPiController.GetLED:output_type -> zscanproto.LEDState
+	3, // 10: zscanproto.ZPiController.ConfigureToF:output_type -> zscanproto.Status
+	3, // 11: zscanproto.ZPiController.EnableToF:output_type -> zscanproto.Status
+	3, // 12: zscanproto.ZPiController.DisableToF:output_type -> zscanproto.Status
+	3, // 13: zscanproto.ZPiController.ActivateToF:output_type -> zscanproto.Status
+	3, // 14: zscanproto.ZPiController.DeactivateToF:output_type -> zscanproto.Status
+	8, // [8:15] is the sub-list for method output_type
+	1, // [1:8] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -335,8 +457,8 @@ func file_ZScanProto_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ZScanProto_proto_rawDesc), len(file_ZScanProto_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   4,
+			NumEnums:      2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

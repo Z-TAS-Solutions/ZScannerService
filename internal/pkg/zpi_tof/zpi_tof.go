@@ -2,7 +2,8 @@ package zpi_trigger
 
 import (
 	"log"
-
+	"fmt"
+	
 	"github.com/d2r2/go-i2c"
 	"github.com/d2r2/go-vl53l0x"
 	"periph.io/x/host/v3"
@@ -21,20 +22,19 @@ func NewZToF() (*ZToF, error) {
 
 	i2c_bus, err := i2c.NewI2C(0x29, 1)
 	if err != nil {
-		log.Fatal(err)
+		return nil, fmt.Errorf("failed to open i2c: %v", err)
 	}
-	defer i2c_bus.Close()
 
 	sensor := vl53l0x.NewVl53l0x()
 
-	err = sensor.Reset(i2c_bus)
-	if err != nil {
-		log.Fatal(err)
+	if err := sensor.Reset(i2c_bus); err != nil {
+		i2c_bus.Close()
+		return nil, fmt.Errorf("sensor reset failed: %v", err)
 	}
 
-	err = sensor.Init(i2c_bus)
-	if err != nil {
-		log.Fatal(err)
+	if err := sensor.Init(i2c_bus); err != nil {
+		i2c_bus.Close()
+		return nil, fmt.Errorf("sensor init failed: %v", err)
 	}
 	return &ZToF{sensor: sensor, i2c_bus: i2c_bus, lastDistance: 9999}, nil
 }
@@ -42,11 +42,19 @@ func NewZToF() (*ZToF, error) {
 func (t *ZToF) Read() (uint16, error) {
 	distance, err := t.sensor.ReadRangeSingleMillimeters(t.i2c_bus)
 	if err != nil {
-		log.Fatal(err)
+		return 0, err
 	}
 	log.Printf("Measured range = %v mm", distance)
 
 	t.lastDistance = uint16(distance)
 
 	return t.lastDistance, nil
+}
+
+
+func (t *ZToF) Close() error {
+	if t.i2c_bus != nil {
+		return t.i2c_bus.Close()
+	}
+	return nil
 }

@@ -34,7 +34,7 @@ func (p *CameraProcess) Start(width, height, fps uint32, output string) {
 				"-t", "0", "--width", fmt.Sprintf("%d", width),
 				"--height", fmt.Sprintf("%d", height),
 				"--framerate", fmt.Sprintf("%d", fps),
-				"-o", output, "--listen", "--inline",
+				"--config", "~/ZPiCam.txt", "-o", output, "--listen", "--inline",
 			}
 			p.cmd = exec.Command("rpicam-vid", args...)
 

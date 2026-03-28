@@ -208,6 +208,12 @@ func (s *ControllerServer) StartToFMonitor(ctx context.Context, stream zscanprot
 								Status: clientEvent.LedStatus,
 							})
 							log.Println("Auth Result Received")
+
+							time.Sleep(2 * time.Second)
+
+							s.SetLEDStatus(ctx, &zscanproto.LEDStatusRequest{
+								Status: zscanproto.LEDStatus_FAILED,
+							})
 							return
 						}
 					}

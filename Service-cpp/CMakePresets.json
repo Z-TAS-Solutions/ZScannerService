@@ -1,0 +1,54 @@
+{
+  "version": 3,
+  "vendor": {
+    "conan": {}
+  },
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 15,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "conan-default",
+      "displayName": "Conan Release (Build Folder)",
+      "description": "Uses the manual 'build' folder to sync with terminal commands",
+      "generator": "Visual Studio 17 2022",
+      "cacheVariables": {
+        "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "toolset": {
+        "value": "v143",
+        "strategy": "external"
+      },
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "toolchainFile": "${sourceDir}/build/generators/conan_toolchain.cmake",
+      "binaryDir": "${sourceDir}/build"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "conan-release",
+      "configurePreset": "conan-default",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "conan-release",
+      "configurePreset": "conan-default",
+      "configuration": "Release",
+      "execution": {
+        "jobs": 6
+      },
+      "environment": {
+        "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH": "C:\\Users\\super\\.conan2\\p\\grpc7dbefd30ba009\\p\\res\\grpc\\roots.pem",
+        "OPENSSL_MODULES": "C:\\Users\\super\\.conan2\\p\\opens886fce7ed7c46\\p\\lib\\ossl-modules"
+      }
+    }
+  ]
+}

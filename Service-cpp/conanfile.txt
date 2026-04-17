@@ -1,0 +1,9 @@
+[requires]
+grpc/1.69.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout

@@ -1,0 +1,10 @@
+^D:\WORKSPACE\REPOS\Z-TAS-SOLUTIONS\ZCRYPT-FUSIONENGINE\BUILD\CMAKEFILES\D93F0FEC20387DD6F53D6029F37AE288\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SD:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine -BD:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/ZCrypt-FusionEngine.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

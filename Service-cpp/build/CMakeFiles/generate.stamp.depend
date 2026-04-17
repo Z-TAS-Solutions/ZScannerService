@@ -1,0 +1,75 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeFindDependencyMacro.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Compiler/MSVC.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC-CXX.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_cpp_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_csharp_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_node_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_objective_c_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_php_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_python_plugin.cmake
+C:/Users/zischl/.conan2/p/grpc7dbefd30ba009/p/lib/cmake/conan_trick/grpc_ruby_plugin.cmake
+C:/Users/zischl/.conan2/p/opens886fce7ed7c46/p/lib/cmake/conan-official-openssl-variables.cmake
+C:/Users/zischl/.conan2/p/proto6443e0b5a6574/p/lib/cmake/protobuf/protobuf-conan-protoc-target.cmake
+C:/Users/zischl/.conan2/p/proto6443e0b5a6574/p/lib/cmake/protobuf/protobuf-generate.cmake
+C:/Users/zischl/.conan2/p/proto6443e0b5a6574/p/lib/cmake/protobuf/protobuf-module.cmake
+C:/Users/zischl/.conan2/p/proto6443e0b5a6574/p/lib/cmake/protobuf/protobuf-options.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/CMakeLists.txt
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/CMakeFiles/3.31.6-msvc6/CMakeCXXCompiler.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/CMakeFiles/3.31.6-msvc6/CMakeRCCompiler.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/CMakeFiles/3.31.6-msvc6/CMakeSystem.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/OpenSSL-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/OpenSSL-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/OpenSSLConfig.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/OpenSSLConfigVersion.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/OpenSSLTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/ZLIB-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/ZLIB-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/ZLIBConfig.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/ZLIBConfigVersion.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/ZLIBTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/absl-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/absl-config-version.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/absl-config.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/absl-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/abslTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/c-ares-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/c-ares-config-version.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/c-ares-config.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/c-ares-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/c-aresTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/cmakedeps_macros.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/conan_toolchain.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/gRPC-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/gRPC-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/gRPCConfig.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/gRPCConfigVersion.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/gRPCTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/protobuf-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/protobuf-config-version.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/protobuf-config.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/protobuf-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/protobufTargets.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/re2-Target-release.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/re2-config-version.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/re2-config.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/re2-release-x86_64-data.cmake
+D:/Workspace/Repos/Z-TAS-Solutions/ZCrypt-FusionEngine/build/generators/re2Targets.cmake

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\src\ControllerServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\src\ZLED.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\generated\ZScan.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\generated\ZScan.grpc.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F35AD07A-D0D2-3884-B95F-A707B9DEFE31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{94C95EA8-65AD-3BEC-9246-F51CF2904FDA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,9 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/build/generators") 
-
 project(ZScannerService LANGUAGES CXX)
+
+set(CONAN_GEN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/generators")
+
+if(EXISTS "${CONAN_GEN_DIR}/conan_toolchain.cmake")
+    include("${CONAN_GEN_DIR}/conan_toolchain.cmake")
+    list(APPEND CMAKE_PREFIX_PATH "${CONAN_GEN_DIR}")
+endif()
+
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -47,9 +53,11 @@ file(GLOB EXTERNAL_ULIBS "${CMAKE_CURRENT_SOURCE_DIR}/external/lib/Universal/${A
 
 set(APP_SOURCES
     src/main.cpp
+    src/ControllerServer.cpp
+    src/ZLED.cpp
 )
 
-add_executable(ZScannerService ${APP_SOURCES} ${PROTO_SRC} ${GRPC_SRC} "src/ZFusionCore.cpp")
+add_executable(ZScannerService ${APP_SOURCES} ${PROTO_SRC} ${GRPC_SRC})
 add_dependencies(ZScannerService proto_gen)
 
 target_compile_definitions(ZScannerService PUBLIC 
@@ -80,6 +88,7 @@ target_include_directories(ZScannerService PRIVATE
 target_link_libraries(ZScannerService PRIVATE
     gRPC::grpc++
     protobuf::libprotobuf
+    gpiod
     ${EXTERNAL_ULIBS}
     ${EXTERNAL_LIBS}
 )

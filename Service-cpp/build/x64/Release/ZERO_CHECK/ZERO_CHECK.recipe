@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Workspace\Repos\Z-TAS-Solutions\ZCrypt-FusionEngine\build\x64\Release\ZERO_CHECK</FullPath>
+      <FullPath>D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\x64\Release\ZERO_CHECK</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

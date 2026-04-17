@@ -26,7 +26,7 @@
                 "strategy": "external"
             },
             "toolchainFile": "generators\\conan_toolchain.cmake",
-            "binaryDir": "D:\\Workspace\\Repos\\Z-TAS-Solutions\\ZCrypt-FusionEngine\\build"
+            "binaryDir": "D:\\Workspace\\Repos\\Z-TAS-Solutions\\ZScannerService\\Service-cpp\\build"
         }
     ],
     "buildPresets": [

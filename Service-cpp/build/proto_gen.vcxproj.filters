@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZCrypt-FusionEngine\build\CMakeFiles\d0daf71f3b363938eca15a93540e0492\zfusion.pb.cc.rule">
+    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\CMakeFiles\1e253c21015099e0dfbc211654ead3a8\ZScan.pb.cc.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZCrypt-FusionEngine\build\CMakeFiles\d93f0fec20387dd6f53d6029f37ae288\proto_gen.rule">
+    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\CMakeFiles\86b6edf3786356751edc8c04d0e79240\proto_gen.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZCrypt-FusionEngine\CMakeLists.txt" />
+    <CustomBuild Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="D:\Workspace\Repos\Z-TAS-Solutions\ZCrypt-FusionEngine\build\CMakeFiles\proto_gen" />
+    <None Include="D:\Workspace\Repos\Z-TAS-Solutions\ZScannerService\Service-cpp\build\CMakeFiles\proto_gen" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{DA3B9E86-1F9F-36E6-91E6-126C84EC8068}</UniqueIdentifier>
+      <UniqueIdentifier>{F35AD07A-D0D2-3884-B95F-A707B9DEFE31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

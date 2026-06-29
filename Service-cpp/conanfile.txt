@@ -1,0 +1,10 @@
+[requires]
+grpc/1.69.0
+libgpiod/2.1
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout

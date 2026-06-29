@@ -1,0 +1,45 @@
+{
+    "version": 3,
+    "vendor": {
+        "conan": {}
+    },
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 15,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "conan-release",
+            "displayName": "'conan-release' config",
+            "description": "'conan-release' configure using 'Unix Makefiles' generator",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "toolchainFile": "generators/conan_toolchain.cmake",
+            "binaryDir": "/mnt/d/Workspace/Repos/Z-TAS-Solutions/ZScannerService/Service-cpp/build/build/Release"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "conan-release",
+            "configurePreset": "conan-release",
+            "jobs": 20
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "conan-release",
+            "configurePreset": "conan-release",
+            "execution": {
+                "jobs": 20
+            },
+            "environment": {
+                "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH": "/home/zischl/.conan2/p/b/grpc85988c062d451/p/res/grpc/roots.pem",
+                "OPENSSL_MODULES": "/home/zischl/.conan2/p/b/opens6233d39fdded6/p/lib/ossl-modules"
+            }
+        }
+    ]
+}

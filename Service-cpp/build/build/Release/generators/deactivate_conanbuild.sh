@@ -1,0 +1,1 @@
+. "/mnt/d/Workspace/Repos/Z-TAS-Solutions/ZScannerService/Service-cpp/build/build/Release/generators/deactivate_conanbuildenv-release-x86_64.sh"

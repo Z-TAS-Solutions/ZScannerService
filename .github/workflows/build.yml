@@ -1,0 +1,57 @@
+name: Dual Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [go, cpp]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        if: matrix.service == 'go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Build Go Binary
+        if: matrix.service == 'go'
+        run: |
+          cd Service-go
+          env GOOS=linux GOARCH=arm64 go build -o ZScannerService cmd/grpc/main.go
+
+      - name: Upload Go Artifact
+        if: matrix.service == 'go'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZScannerService-go-artifact
+          path: Service-go/ZScannerService
+          retention-days: 7
+
+      - name: Install ARM64 Cross-Compiler
+        if: matrix.service == 'cpp'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-aarch64-linux-gnu cmake
+
+      - name: Build C++ Binary
+        if: matrix.service == 'cpp'
+        run: |
+          cd Service-cpp
+          mkdir build && cd build
+          cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ ..
+          make -j$(nproc)
+
+      - name: Upload C++ Artifact
+        if: matrix.service == 'cpp'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZScannerService-cpp-artifact
+          path: Service-cpp/build/ZScannerService
+          retention-days: 7

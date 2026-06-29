@@ -1,0 +1,1 @@
+. "/mnt/d/Workspace/Repos/Z-TAS-Solutions/ZScannerService/Service-cpp/build/Release/generators/conanbuildenv-release-armv8.sh"

@@ -31,14 +31,21 @@ func (p *CameraProcess) Start(width, height, fps uint32, output string) {
 			}
 
 			args := []string{
-				"-t", "0", "--width", fmt.Sprintf("%d", width),
+				"--config", "/home/zischl/ZTAS/ZCamExec.txt",
+				"-t", "0",
+				"--width", fmt.Sprintf("%d", width),
 				"--height", fmt.Sprintf("%d", height),
 				"--framerate", fmt.Sprintf("%d", fps),
-				"--config", "~/ZPiCam.txt", "-o", output, "--listen", "--inline",
+				"-o", output,
+				"--listen",
+				"--inline",
 			}
+
 			p.cmd = exec.Command("rpicam-vid", args...)
 
 			fmt.Println("Camera starting (Waiting for connection...)")
+
+			p.cmd.Stderr = os.Stderr
 
 			_ = p.cmd.Run()
 

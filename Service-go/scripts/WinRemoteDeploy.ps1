@@ -14,9 +14,17 @@ if (-not (Test-Path $LocalScript)) {
     exit
 }
 
-Write-Host "Uploading updater script to Pi..." -ForegroundColor Yellow
+Write-Host "Converting line endings to Linux format (LF)..." -ForegroundColor Magenta
+$Content = [System.IO.File]::ReadAllText((Resolve-Path $LocalScript))
+$LinuxContent = $Content -replace "`r`n", "`n"
+$TempScript = [System.IO.Path]::GetTempFileName()
 
-scp "$LocalScript" "${PiUser}@${PiHost}:${RemotePath}/update.sh"
+$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($TempScript, $LinuxContent, $Utf8NoBom)
+
+Write-Host "Uploading updater script to Pi..." -ForegroundColor Yellow
+scp "$TempScript" "${PiUser}@${PiHost}:${RemotePath}/ZScannerUpdater.sh"
+Remove-Item $TempScript -Force
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Upload Failed!" -ForegroundColor Red
@@ -24,6 +32,6 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "Setting executable permissions..." -ForegroundColor Blue
-ssh "${PiUser}@${PiHost}" "chmod +x ${RemotePath}/update.sh"
+ssh "${PiUser}@${PiHost}" "chmod +x ${RemotePath}/ZScannerUpdater.sh"
 
 Write-Host "Done! Run ./update.sh on your Pi peasant !." -ForegroundColor Green

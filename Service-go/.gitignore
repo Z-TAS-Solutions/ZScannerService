@@ -1,0 +1,12 @@
+*.exe
+*.out
+*.app
+
+*.test
+*.prof
+*.log
+
+.env
+
+.DS_Store
+Thumbs.db

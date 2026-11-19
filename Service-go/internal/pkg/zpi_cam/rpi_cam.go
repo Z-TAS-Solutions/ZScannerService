@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"sync"
+	"syscall"
 	"time"
 )
 
@@ -18,6 +19,8 @@ func NewCameraProcess() *CameraProcess {
 	return &CameraProcess{}
 }
 
+// Calls ZStreamer with given width, height and fps parameters
+// ZStreamer starts waiting on ports 8888 and 8889 and supports only max 2 clients
 func (p *CameraProcess) Start(width, height, fps uint32, output string) {
 	p.feedActive = true
 
@@ -31,26 +34,22 @@ func (p *CameraProcess) Start(width, height, fps uint32, output string) {
 			}
 
 			args := []string{
-				"--config", "/home/zischl/ZTAS/ZCamExec.txt",
-				"-t", "0",
-				"--width", fmt.Sprintf("%d", width),
-				"--height", fmt.Sprintf("%d", height),
-				"--framerate", fmt.Sprintf("%d", fps),
-				"-o", output,
-				"--listen",
-				"--inline",
+				fmt.Sprintf("%d", width),
+				fmt.Sprintf("%d", height),
+				fmt.Sprintf("%d", fps),
 			}
 
-			p.cmd = exec.Command("rpicam-vid", args...)
-
-			fmt.Println("Camera starting (Waiting for connection...)")
-
+			p.cmd = exec.Command("/home/zischl/ZTAS/ZStreamer", args...)
+			p.cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 			p.cmd.Stderr = os.Stderr
+			p.cmd.Stdout = os.Stdout
+
+			fmt.Println("[Camera] ZTAS Streamer starting on ports 8888 & 8889...")
 
 			_ = p.cmd.Run()
 
-			fmt.Println("Client disconnected. Restarting listener...")
-			time.Sleep(100 * time.Millisecond)
+			fmt.Println("[Camera] ZTAS Streamer exited. Restarting...")
+			time.Sleep(200 * time.Millisecond)
 		}
 	}()
 }
@@ -64,21 +63,12 @@ func (p *CameraProcess) Stop() error {
 		return nil
 	}
 
-	if err := p.cmd.Process.Signal(os.Interrupt); err != nil {
-		return p.cmd.Process.Kill()
-	}
-
+	_ = syscall.Kill(-p.cmd.Process.Pid, syscall.SIGTERM)
+	time.Sleep(100 * time.Millisecond)
+	_ = syscall.Kill(-p.cmd.Process.Pid, syscall.SIGKILL)
 	return nil
 }
 
 func (p *CameraProcess) Kill() error {
-	p.camMutex.Lock()
-	p.feedActive = false
-	p.camMutex.Unlock()
-
-	if p.cmd == nil || p.cmd.Process == nil {
-		return nil
-	}
-
-	return p.cmd.Process.Kill()
+	return p.Stop()
 }

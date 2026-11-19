@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Configuration
 REPO="Z-TAS-Solutions/ZScannerService"
@@ -16,7 +17,7 @@ done
 
 # Fetching latest successful workflow run details
 RUN_DATA=$(curl -s -H "Authorization: Bearer $TOKEN" \
-  "https://github.com")
+    "https://api.github.com/repos/$REPO/actions/runs?status=completed&per_page=1")
 
 # Extract the Run ID and the Commit Hash
 LATEST_RUN_ID=$(echo "$RUN_DATA" | jq -r '.workflow_runs[0].id')
@@ -37,7 +38,7 @@ if [ "$LATEST_COMMIT" != "$CURRENT_COMMIT" ]; then
 
     # Get artifact list for the latest run
     ARTIFACT_DATA=$(curl -s -H "Authorization: Bearer $TOKEN" \
-      "https://github.com")
+        "https://api.github.com/repos/$REPO/actions/runs/$LATEST_RUN_ID/artifacts")
     
     UPDATED_ANY=false
 
